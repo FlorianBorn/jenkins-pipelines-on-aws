@@ -115,3 +115,29 @@ Udacity Cloud DevOps Nanodegree / Use Jenkins to check and store a simple html f
             ]
         }    
     '''
+
+7. Create Pipeline for uploading to S3
+   Replace the initial Build Stage in the Jenkinsfile with a new Upload-Stage
+   '''
+        pipeline {
+            agent any
+            stages {
+                stage('Upload to AWS') {
+                    steps {
+                        withAWS(region: 'us-west-2', credentials: 'aws') {
+                            s3Upload(file: 'index.html', bucket: 'udacity-aws-pipeline-bucket', path: 'index.html')
+                        }
+                    }
+                }
+            }
+
+        }   
+   '''
+   add, commit and push this change to GitHub. The Jenkins pipeline will run shortly afterwards.
+
+8. Add an additional Stage to the pipeline
+    The additional step will check the html-file befor uploading.
+    Therefore, tidy is installed on the EC2 instance running Jenkins.
+    '''
+    sudo apt-get install -y tidy
+    '''
