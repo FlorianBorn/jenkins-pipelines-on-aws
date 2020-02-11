@@ -85,3 +85,33 @@ Udacity Cloud DevOps Nanodegree / Use Jenkins to check and store a simple html f
     In Jenkins, select the Blue Ocean Plugin and create a Pipeline.
     Select GitHub as SCM.
     In order to access GitHub, Jenkins ask for an access token. Create this token and connect Jenkins and GitHub.
+    Select the desired repository.
+
+    After everything is set up, the pipeline overview will look like this:
+    IMG
+
+5. Set Up AWS Credentials in Jenkins:
+    Credentials --> global --> Add credentials
+    After creation, the credentials should be available for the rest of the system 
+
+6. Set up a S3 Bucket
+    Create a S3 Bucket. Stick to the default settings but uncheck the "Block all public access" Button.
+
+    Enable Static website hosting:
+    After creating the bucket. Go to the configuration panel and select Properties. Enable Static Website Hosting. Choose index.html for the index document.
+
+    Add a bucket policy.
+    '''
+        {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Sid": "PublicReadGetObject",
+                    "Effect": "Allow",
+                    "Principal": "*",
+                    "Action": "s3:GetObject",
+                    "Resource": "arn:aws:s3:::udacity-aws-pipeline-bucket/*"
+                }
+            ]
+        }    
+    '''
